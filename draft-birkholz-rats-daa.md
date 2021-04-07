@@ -66,7 +66,7 @@ informative:
 
 --- abstract
 
-This document maps the concept of Direct Anonymous Attestation (DAA) to the Remote Attestation Procedures (RATS).
+This document maps the concept of Direct Anonymous Attestation (DAA) to the Remote Attestation Procedures (RATS) Architecture.
 The role DAA Issuer is introduced and its interactions with existing RATS roles is specified.
 
 --- middle
