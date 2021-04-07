@@ -84,11 +84,9 @@ To accomplish that goal, a new RATS role -- the DAA Issuer -- is introduced and 
 # Terminology
 
 This document uses the following set of terms, roles, and concepts as defined in {{-RATS}}:
-
 Attester, Verifier, Relying Party, Conceptual Message, Evidence, Attestation Result, Attesting Environment
 
 Additionally, this document uses and augments the following concepts and information elements as defined in {{-models}}:
-
 Attester Identity, Authentication Secret, Authentication Secret ID
 
 A PKIX Certificate is an X.509v3 format certificate as specified by {{RFC5280}}.
