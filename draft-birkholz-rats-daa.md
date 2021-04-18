@@ -173,13 +173,12 @@ In order to ensure an appropriate conveyance of Evidence via interaction models 
 
 <!-- : The provenance of Evidence with respect to a distinguishable Attesting Environment MUST be correct and unambiguous. -->
 
- An Attester Identity MAY be a unique identity, it MAY be included in a zero-knowledge proof (ZKP), or it MAY be part of a group signature, or it MAY be a randomised DAA credential.
 
 Attestation Evidence Authenticity:
 
 : Attestation Evidence MUST be correct and authentic.
 
-: In order to provide proofs of authenticity, Attestation Evidence SHOULD be cryptographically associated with an identity document (e.g. an PKIX certificate or trusted key material, or a randomised DAA credential), or SHOULD include a correct and unambiguous and stable reference to an accessible identity document.
+: In order to provide proofs of authenticity, Attestation Evidence SHOULD be cryptographically associated with an identity document that is a randomised DAA credential.
 
 <!-- # Generic Information Elements -->
 
@@ -191,23 +190,16 @@ Attester Identity ('attesterIdentity'):
 
 : *mandatory*
 
-: A statement about a distinguishable Attester made by an Endorser without accompanying evidence about its validity - used as proof of identity.
-
-: In DAA, the Attester's identity is not revealed to the verifier.
-The Attester is issued with a credential by the DAA Issuer that is randomised and then used to anonymously confirm the validity of their evidence.
-The evidence is verified using the DAA Issuer’s public key.
+: In DAA, the Attester's identity is not revealed to the verifier. The Attester is issued with a credential by the DAA Issuer that is randomised and then used to anonymously confirm the validity of their evidence.
+The evidence is verified using the DAA Issuer’s group public key.
 
 Authentication Secret IDs ('authSecID'):
 
 : *mandatory*
 
-: A statement representing an identifier list that MUST be associated with corresponding Authentication Secrets used to protect Evidence.
+: In DAA, Authentication Secret IDs are represented by the DAA Issuer’s group public key that MUST be used to create DAA credentials for the corresponding Authentication Secrets used to protect Evidence.
 
-: In DAA, Authentication Secret IDs are represented by the DAA issuer’s public key that MUST be used to create DAA credentials for the corresponding Authentication Secrets used to protect Evidence.
-
-: Each Authentication Secret is uniquely associated with a distinguishable Attesting Environment. Consequently, an Authentication Secret ID also identifies an Attesting Environment.
-
-: In DAA, an Authentication Secret ID does not identify a unique Attesting Environment but associated with a group of Attesting Environments.
+: In DAA, an Authentication Secret ID does not identify a unique Attesting Environment but is associated with a group of Attesting Environments.
 This is because an Attesting Environment should not be distinguishable and the DAA credential which represents the Attesting Environment is randomised each time it used.
 
 --- back
