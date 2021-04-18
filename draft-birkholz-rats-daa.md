@@ -84,7 +84,7 @@ To accomplish that goal, a new RATS role -- the DAA Issuer -- is introduced and 
 # Terminology
 
 This document uses the following set of terms, roles, and concepts as defined in {{-RATS}}:
-Attester, Verifier, Relying Party, Conceptual Message, Evidence, Attestation Result, Attesting Environment. The role of Endorser, also defined in this document needs to be adapted and details are given below.
+Attester, Verifier, Relying Party, Conceptual Message, Evidence, Attestation Result, Attesting Environment. The role of Endorser, also defined in {{-RATS}}, needs to be adapted and details are given below.
 
 Additionally, this document uses and adapts, as necessary, the following concepts and information elements as defined in {{-models}}:
 Attester Identity, Authentication Secret, Authentication Secret ID
@@ -141,25 +141,26 @@ In order to support these DAA signatures, the DAA Issuer MUST associate a single
 The DAA Issuer’s group public key certificate replaces the individual  Attester Identity documents during authenticity validation as a part of the appraisal of Evidence conducted by a verifier.
 This is in contrast to intuition that there has to be a unique Attester Identity per device.
 
-For DAA, the role of the Endorser is essentially the same, but they now  provide Attester Identity documents to the DAA Issuer rather than directly to the verifier. These Attester Identity documents enable the Attester to obtain a credential from the DAA Issuer. For this credential to be used the DAA Issuer provides the Group Public Key (which, for DAA, replaces the Attester Identity documents) to the verifier.
+For DAA, the role of the Endorser is essentially the same, but they now  provide Attester Identity documents to the DAA Issuer rather than directly to the verifier. These Attester Identity documents enable the Attester to obtain a credential from the DAA Issuer.
 
 # DAA changes to the RATS Architecture
 
-In order to enable the use of DAA, the DAA Issuer role is added to the roles defined in the RATS Architecture.
+In order to enable the use of DAA, a new conceptual message, the Credential Request, is defined and a new role, the DAA Issuer role, is added to the roles defined in the RATS Architecture.
 
+Credential Request:
 
+An Attester sends a Credential Request to the DAA Issuer to obtain a credential. This request contains information about the DAA key that the Attester will use and Attester Identity documents that are issued by the Endorser, can confirm that the request came from a valid Attester.
 
 DAA Issuer:
 
-: A RATS role that offers zero-knowledge proofs based on public-key certificates used for a group of Attesters {{DAA}}.
-
+: A RATS role that offers zero-knowledge proofs based on public-key certificates used for a group of Attesters (Group Public Keys) {{DAA}}. How this group of Attesters is defined is not specified here, but the group must be large enough for the necessary anonymity to be assured.
 <!-- the following text should be re-used in this section -->
 : Effectively, these certificates share the semantics of Endorsements, with the following exceptions:
 
-    * The associated private keys are used by the DAA Issuer to provide an Attester with a credential that it can use to convince the Verifier that its Evidence is valid.
-    To keep their anonymity the Attester randomizes this credential each time that it is used.
-    * The Verifier can use the DAA Issuer's public key certificate, together with the randomized credential from the Attester, to confirm that the Evidence comes from a valid Attester.
-    * A credential is conveyed from a DAA Issuer to an Attester in combination with the conveyance of the public key certificates from DAA Issuer to Verifier.
+    * Upon receiving a Credential Request from an Attester, the associated group private key is used by the DAA Issuer to provide the Attester with a credential that it can use to convince the Verifier that its Evidence is valid.
+    To keep their anonymity the Attester randomizes this credential each time that it is used. Although the DAA Issuer knows the Attester Identity and can associate this with the credential issued, randomisation ensures that the Attester's  identity cannot be revealed to anyone, including the Issuer.
+    * The Verifier can use the DAA Issuer's group public key certificate, together with the randomized credential from the Attester, to confirm that the Evidence comes from a valid Attester without revealing the Attester's identity.
+    * A credential is conveyed from a DAA Issuer to an Attester in combination with the conveyance of the group public key certificate from DAA Issuer to Verifier.
 
 
 # Additions to Remote Attestation principles
