@@ -141,7 +141,7 @@ In order to support these DAA signatures, the DAA Issuer MUST associate a single
 The DAA Issuer’s group public key certificate replaces the individual  Attester Identity documents during authenticity validation as a part of the appraisal of Evidence conducted by a verifier.
 This is in contrast to intuition that there has to be a unique Attester Identity per device.
 
-For DAA, the role of the Endorser is essentially the same, but they now  provide Attester Identity documents to the DAA Issuer rather than directly to the verifier. These Attester Identity documents enable the Attester to obtain a credential from the DAA Issuer.
+For DAA, the role of the Endorser is essentially the same, but they now  provide Attester endorsement documents to the DAA Issuer rather than directly to the verifier. These Attester endorsement documents enable the Attester to obtain a credential from the DAA Issuer.
 
 # DAA changes to the RATS Architecture
 
@@ -149,7 +149,7 @@ In order to enable the use of DAA, a new conceptual message, the Credential Requ
 
 Credential Request:
 
-An Attester sends a Credential Request to the DAA Issuer to obtain a credential. This request contains information about the DAA key that the Attester will use and Attester Identity documents that are issued by the Endorser, can confirm that the request came from a valid Attester.
+An Attester sends a Credential Request to the DAA Issuer to obtain a credential. This request contains information about the DAA key that the Attester will use to create evidence and together with Attester endorsement information that are provided by the Endorser to confirm that the request came from a valid Attester.
 
 DAA Issuer:
 
