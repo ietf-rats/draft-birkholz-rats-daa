@@ -84,9 +84,9 @@ To accomplish that goal, a new RATS role -- the DAA Issuer -- is introduced and 
 # Terminology
 
 This document uses the following set of terms, roles, and concepts as defined in {{-RATS}}:
-Attester, Verifier, Relying Party, Conceptual Message, Evidence, Attestation Result, Attesting Environment
+Attester, Verifier, Relying Party, Conceptual Message, Evidence, Attestation Result, Attesting Environment. The role of Endorser, also defined in this document needs to be adapted and details are given below.
 
-Additionally, this document uses and augments the following concepts and information elements as defined in {{-models}}:
+Additionally, this document uses and adapts, as necessary, the following concepts and information elements as defined in {{-models}}:
 Attester Identity, Authentication Secret, Authentication Secret ID
 
 A PKIX Certificate is an X.509v3 format certificate as specified by {{RFC5280}}.
@@ -94,52 +94,77 @@ A PKIX Certificate is an X.509v3 format certificate as specified by {{RFC5280}}.
 {::boilerplate bcp14}
 
 # Direct Anonymous Attestation
+Figure 1 show that data flows between the different roles involved in DAA.
+```
+   ************          *************    ************    *****************
+   * Endorser *          * Reference *    * Verifier *    * Relying Party *
+   ************          * Value     *    *  Owner   *    *  Owner        *
+          |              * Provider  *    ************    *****************
+          |              *************          |                 |
+          |                       |             |                 |
+          |Endorsements           |Reference    |Appraisal        |Appraisal
+          |                       |Values       |Policy           |Policy for
+          |                       |             |for              |Attestation
+          |                       |             |Evidence         |Results
+          V                       |             |                 |
+  .-----------------.             |             |                 |
+  |   DAA Issuer    |---------.   |             |                 |
+  '-----------------'         |   |             |                 |
+    ^          |         Group|   |             |                 |
+    |          |        Public|   |             |                 |
+    |Credential|           Key|   |             |                 |
+    |Request   |              v   v             v                 |
+    |          |             .----------------------.             |
+    |          |          .->|      Verifier        |----.        |
+    |          |          |  '----------------------'    |        |
+    |          |          |                              |        |
+    |          |          |Evidence           Attestation|        |
+    |          |          |                       Results|        |
+    |          |          |                              |        |
+    |          |Credential|                              |        |
+    |          |          |                              |        |
+    |          v          |                              v        v
+    |        .-------------.                          .---------------.
+    '--------|  Attester   |                          | Relying Party |
+             '-------------'                          '---------------'
+```
+                               Figure 1: DAA data flows
+> []there must be a better way to centre text than just adding spaces
 
-DAA {{DAA}} is a signature scheme that allows preservation of the privacy of users that are associated with an Attester (e.g. its owner).
+
+DAA {{DAA}} is a signature scheme that allows the privacy of users that are associated with an Attester (e.g. its owner) to be maintained.
 Essentially, DAA can be seen as a group signature scheme with the feature that given a DAA signature no-one can find out who the signer is, i.e., the anonymity is not revocable.
 To be able to sign anonymously, an Attester has to obtain a credential from a DAA Issuer.
-The DAA Issuer uses a private/public key pair to generate a credential for an Attester <!-- this could be phrased a bit confusing as below it is stated that the key-pair is used for a group of Attesters --> and makes the public key (in the form of a public key certificate) available to the verifier in order to enable them to validate the DAA signature obtained as part of the Evidence.
+The DAA Issuer uses a private/public key pair to generate credentials for a group of Attesters <!-- this could be phrased a bit confusing as below it is stated that the key-pair is used for a group of Attesters --> and makes the public key (in the form of a public key certificate) available to the verifier in order to enable them to validate the Evidence received.
 
-In order to support these DAA signatures, the DAA Issuer MUST associate a single key pair with each group of Attesters <!-- it it clear enough what exactly "a group of Attesters" means? --> and use the same key pair when creating the credentials for all of the Attesters in this group.
-The DAA Issuer’s public key certificate used by a group of Attesters replaces the individual  Attester Identity documents during authenticity validation as a part of the appraisal of Evidence conducted by a Verifier.
+In order to support these DAA signatures, the DAA Issuer MUST associate a single key pair with a group of Attesters <!-- is it clear enough what exactly "a group of Attesters" means? --> and use the same key pair when creating the credentials for all of the Attesters in this group.
+The DAA Issuer’s group public key certificate replaces the individual  Attester Identity documents during authenticity validation as a part of the appraisal of Evidence conducted by a verifier.
 This is in contrast to intuition that there has to be a unique Attester Identity per device.
 
-<!-- revise: adding the DAA Issuer role independent of the Endorser role might be preferable? --> This document extends the duties of the Endorser role as defined by the RATS architecture with respect to the provision of these Attester Identity documents to Attesters.
-The existing duties of the Endorser role and the duties of a DAA Issuer are quite similar as illustrated in the following subsections.
+For DAA, the role of the Endorser is essentially the same, but they now  provide Attester Identity documents to the DAA Issuer rather than directly to the verifier. These Attester Identity documents enable the Attester to obtain a credential from the DAA Issuer. For this credential to be used the DAA Issuer provides the Group Public Key (which, for DAA, replaces the Attester Identity documents) to the verifier.
 
-## Endorsers [old section, with maybe useful content]
+# DAA changes to the RATS Architecture
 
-Via its Attesting Environments, an Attester only generates Evidence about its Target Environments.
-After being appraised to be trustworthy, a Target Environment may become a new Attesting Environment in charge of generating Evidence for further Target Environments.
-{{-RATS}} explains this as Layered Attestation.
-Layered Attestation has to start with an initial Attesting Environment. In essence, there cannot be turtles all the way down {{turtles}}.
-At this rock bottom of Layered Attestation, the Attesting Environments are always called Roots of Trust (RoT).
-An Attester cannot generate Evidence about its own RoTs by design.
-As a consequence, a Verifier requires trustable statements about this subset of Attesting Environments from a different source than the Attester itself.
-The corresponding trustable statements are called Endorsements and originate from external, trustable entities that take on the role of an Endorser (e.g., supply chain entities).
+In order to enable the use of DAA, the DAA Issuer role is added to the roles defined in the RATS Architecture.
 
-# DAA augments to the RATS Architecture
 
-In order to enable the use of DAA, the DAA Issuer role is added to the RATS Architecture role takes on the duties of a DAA Issuer in addition to its already defined duties.
-Effectively, these certificates share the semantics of Endorsements, with the following exceptions:
 
 DAA Issuer:
 
 : A RATS role that offers zero-knowledge proofs based on public-key certificates used for a group of Attesters {{DAA}}.
 
 <!-- the following text should be re-used in this section -->
+: Effectively, these certificates share the semantics of Endorsements, with the following exceptions:
 
-* The associated private keys are used by the DAA Issuer to provide an Attester with a credential that it can use to convince the Verifier that its Evidence is valid.
-To keep their anonymity the Attester randomizes this credential each time that it is used.
-* The Verifier can use the DAA Issuer's public key certificate, together with the randomized credential from the Attester, to confirm that the Evidence comes from a valid Attester.
-* A credential is conveyed from an Endorser to an Attester in combination with the conveyance of the public key certificates from Endorser to Verifier.
+    * The associated private keys are used by the DAA Issuer to provide an Attester with a credential that it can use to convince the Verifier that its Evidence is valid.
+    To keep their anonymity the Attester randomizes this credential each time that it is used.
+    * The Verifier can use the DAA Issuer's public key certificate, together with the randomized credential from the Attester, to confirm that the Evidence comes from a valid Attester.
+    * A credential is conveyed from a DAA Issuer to an Attester in combination with the conveyance of the public key certificates from DAA Issuer to Verifier.
 
-The zero-knowledge proofs required cannot be created by an Attester alone -- like the Endorsements of RoTs -- and have to be created by a trustable third entity -- like an Endorser.
-Due to that semantic overlap, the Endorser role is augmented via the definition of DAA duties as defined below. This augmentation enables the Endorser to convey trustable third party statements both to Verifier roles and Attester roles.
 
 # Additions to Remote Attestation principles
 
-revise: the following section content is included to derive new section content]
+<!-- revise: the following section content is included to derive new section content -->
 
 In order to ensure an appropriate conveyance of Evidence via interaction models in general, the following set of prerequisites MUST be in place to support the implementation of interaction models:
 
@@ -168,8 +193,8 @@ Attester Identity ('attesterIdentity'):
 : A statement about a distinguishable Attester made by an Endorser without accompanying evidence about its validity - used as proof of identity.
 
 : In DAA, the Attester's identity is not revealed to the verifier.
-The Attester is issued with a credential by the Endorser that is randomised and then used to anonymously confirm the validity of their evidence.
-The evidence is verified using the Endorser’s public key.
+The Attester is issued with a credential by the DAA Issuer that is randomised and then used to anonymously confirm the validity of their evidence.
+The evidence is verified using the DAA Issuer’s public key.
 
 Authentication Secret IDs ('authSecID'):
 
@@ -177,7 +202,7 @@ Authentication Secret IDs ('authSecID'):
 
 : A statement representing an identifier list that MUST be associated with corresponding Authentication Secrets used to protect Evidence.
 
-: In DAA, Authentication Secret IDs are represented by the Endorser (DAA issuer)’s public key that MUST be used to create DAA credentials for the corresponding Authentication Secrets used to protect Evidence.
+: In DAA, Authentication Secret IDs are represented by the DAA issuer’s public key that MUST be used to create DAA credentials for the corresponding Authentication Secrets used to protect Evidence.
 
 : Each Authentication Secret is uniquely associated with a distinguishable Attesting Environment. Consequently, an Authentication Secret ID also identifies an Attesting Environment.
 
