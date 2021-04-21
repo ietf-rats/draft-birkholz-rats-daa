@@ -86,7 +86,7 @@ A PKIX Certificate is an X.509v3 format certificate as specified by {{RFC5280}}.
 
 # Direct Anonymous Attestation
 
-Figure 1 show that data flows between the different roles involved in DAA.
+{{dataflows}} shows the data flows between the different RATS roles involved in DAA.
 
 ~~~~
   ************       *************   ************   *****************
