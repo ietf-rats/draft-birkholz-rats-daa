@@ -140,7 +140,7 @@ In order to enable the use of DAA, a new conceptual message, the Credential Requ
 
 Credential Request:
 
-An Attester sends a Credential Request to the DAA Issuer to obtain a credential. This request contains information about the DAA key that the Attester will use to create evidence and together with Attester endorsement information that are provided by the Endorser to confirm that the request came from a valid Attester.
+: An Attester sends a Credential Request to the DAA Issuer to obtain a credential. This request contains information about the DAA key that the Attester will use to  create evidence and together with Attester endorsement information that is provided by the Endorser to confirm that the request came from a valid Attester.
 
 DAA Issuer:
 
