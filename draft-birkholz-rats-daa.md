@@ -54,15 +54,6 @@ informative:
         Proceedings of the 11rd ACM conference on Computer and Communications Security
       page: 132-145
     date: 2004
-  turtles:
-    title: "Turtles All the Way Down: Foundation, Edifice, and Ruin in Faulkner and McCarthy"
-    author:
-    - ins: R. Rudnicki
-      name: Robert Rudnicki
-    seriesinfo:
-      The Faulkner Journal: 25.2
-      DOI: "10.1353/fau.2010.0002"
-    date: 2010
 
 --- abstract
 
@@ -94,43 +85,43 @@ A PKIX Certificate is an X.509v3 format certificate as specified by {{RFC5280}}.
 {::boilerplate bcp14}
 
 # Direct Anonymous Attestation
-Figure 1 show that data flows between the different roles involved in DAA.
-```
-   ************          *************    ************    *****************
-   * Endorser *          * Reference *    * Verifier *    * Relying Party *
-   ************          * Value     *    *  Owner   *    *  Owner        *
-          |              * Provider  *    ************    *****************
-          |              *************          |                 |
-          |                       |             |                 |
-          |Endorsements           |Reference    |Appraisal        |Appraisal
-          |                       |Values       |Policy           |Policy for
-          |                       |             |for              |Attestation
-          |                       |             |Evidence         |Results
-          V                       |             |                 |
-  .-----------------.             |             |                 |
-  |   DAA Issuer    |---------.   |             |                 |
-  '-----------------'         |   |             |                 |
-    ^          |         Group|   |             |                 |
-    |          |        Public|   |             |                 |
-    |Credential|           Key|   |             |                 |
-    |Request   |              v   v             v                 |
-    |          |             .----------------------.             |
-    |          |          .->|      Verifier        |----.        |
-    |          |          |  '----------------------'    |        |
-    |          |          |                              |        |
-    |          |          |Evidence           Attestation|        |
-    |          |          |                       Results|        |
-    |          |          |                              |        |
-    |          |Credential|                              |        |
-    |          |          |                              |        |
-    |          v          |                              v        v
-    |        .-------------.                          .---------------.
-    '--------|  Attester   |                          | Relying Party |
-             '-------------'                          '---------------'
-```
-                               Figure 1: DAA data flows
-> []there must be a better way to centre text than just adding spaces
 
+Figure 1 show that data flows between the different roles involved in DAA.
+
+~~~~
+  ************       *************   ************   *****************
+  * Endorser *       * Reference *   * Verifier *   * Relying Party *
+  ************       * Value     *   *  Owner   *   *  Owner        *
+       |             * Provider  *   ************   *****************
+       |             *************          |            |
+       |                       |            |            |
+       |Endorsements           |Reference   |Appraisal   |Appraisal
+       |                       |Values      |Policy      |Policy for
+       |                       |            |for         |Attestation
+       |                       |            |Evidence    |Results
+       V                       |            |            |
+.-----------------.            |            |            |
+|   DAA Issuer    |---------.  |            |            |
+'-----------------'         |  |            |            |
+  ^          |         Group|  |            |            |
+  |          |        Public|  |            |            |
+  |Credential|           Key|  |            |            |
+  |Request   |              v  v            v            |
+  |          |             .----------------------.      |
+  |          |          .->|      Verifier        |--.   |
+  |          |          |  '----------------------'  |   |
+  |          |          |                            |   |
+  |          |          |Evidence         Attestation|   |
+  |          |          |                     Results|   |
+  |          |          |                            |   |
+  |          |Credential|                            |   |
+  |          |          |                            |   |
+  |          v          |                            v   v
+  |        .-------------.                     .---------------.
+  '--------|  Attester   |                     | Relying Party |
+           '-------------'                     '---------------'
+~~~~
+{: #dataflows title="DAA data flows"}
 
 DAA {{DAA}} is a signature scheme that allows the privacy of users that are associated with an Attester (e.g. its owner) to be maintained.
 Essentially, DAA can be seen as a group signature scheme with the feature that given a DAA signature no-one can find out who the signer is, i.e., the anonymity is not revocable.
@@ -154,25 +145,17 @@ An Attester sends a Credential Request to the DAA Issuer to obtain a credential.
 DAA Issuer:
 
 : A RATS role that offers zero-knowledge proofs based on public-key certificates used for a group of Attesters (Group Public Keys) {{DAA}}. How this group of Attesters is defined is not specified here, but the group must be large enough for the necessary anonymity to be assured.
-<!-- the following text should be re-used in this section -->
-: Effectively, these certificates share the semantics of Endorsements, with the following exceptions:
 
-    * Upon receiving a Credential Request from an Attester, the associated group private key is used by the DAA Issuer to provide the Attester with a credential that it can use to convince the Verifier that its Evidence is valid.
-    To keep their anonymity the Attester randomizes this credential each time that it is used. Although the DAA Issuer knows the Attester Identity and can associate this with the credential issued, randomisation ensures that the Attester's  identity cannot be revealed to anyone, including the Issuer.
-    * The Verifier can use the DAA Issuer's group public key certificate, together with the randomized credential from the Attester, to confirm that the Evidence comes from a valid Attester without revealing the Attester's identity.
-    * A credential is conveyed from a DAA Issuer to an Attester in combination with the conveyance of the group public key certificate from DAA Issuer to Verifier.
+Effectively, these certificates share the semantics of Endorsements, with the following exceptions:
 
+* Upon receiving a Credential Request from an Attester, the associated group private key is used by the DAA Issuer to provide the Attester with a credential that it can use to convince the Verifier that its Evidence is valid.
+To keep their anonymity the Attester randomizes this credential each time that it is used. Although the DAA Issuer knows the Attester Identity and can associate this with the credential issued, randomisation ensures that the Attester's  identity cannot be revealed to anyone, including the Issuer.
+* The Verifier can use the DAA Issuer's group public key certificate, together with the randomized credential from the Attester, to confirm that the Evidence comes from a valid Attester without revealing the Attester's identity.
+* A credential is conveyed from a DAA Issuer to an Attester in combination with the conveyance of the group public key certificate from DAA Issuer to Verifier.
 
 # Additions to Remote Attestation principles
 
-<!-- revise: the following section content is included to derive new section content -->
-
-In order to ensure an appropriate conveyance of Evidence via interaction models in general, the following set of prerequisites MUST be in place to support the implementation of interaction models:
-
-## Attester Identity [exemplary proposal for new structure]
-
-<!-- : The provenance of Evidence with respect to a distinguishable Attesting Environment MUST be correct and unambiguous. -->
-
+In order to ensure an appropriate conveyance of Evidence via interaction models in general, the following prerequisite considering Attester Identity MUST be in place to support the implementation of interaction models.
 
 Attestation Evidence Authenticity:
 
@@ -180,11 +163,9 @@ Attestation Evidence Authenticity:
 
 : In order to provide proofs of authenticity, Attestation Evidence SHOULD be cryptographically associated with an identity document that is a randomised DAA credential.
 
-<!-- # Generic Information Elements -->
-
-This section defines the information elements that are vital to all kinds interaction models.
-Varying from solution to solution, generic information elements can be either included in the scope of protocol messages (instantiating Conceptual Messages) or can be included in additional protocol parameters or payload.
-Ultimately, the following information elements are required by any kind of scalable remote attestation procedure using one or more of the interaction models provided.
+The following information elements define extensions for corresponding information elements defined in {{-models}} and that are vital to all types of reference interaction models.
+Varying from solution to solution, generic information elements can be either included in the scope of protocol messages (instantiating Conceptual Messages defined by the RATS architecture) or can be included in additional protocol parameters of protocols that facilitate the conveyance of RATS Conceptual Messages.
+Ultimately, the following information elements are required by any kind of scalable remote attestation procedure using DAA with one of RATS's reference interaction models.
 
 Attester Identity ('attesterIdentity'):
 
