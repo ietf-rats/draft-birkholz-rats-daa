@@ -5,9 +5,9 @@
 RATS Working Group                                           H. Birkholz
 Internet-Draft                                            Fraunhofer SIT
 Intended status: Informational                                 C. Newton
-Expires: 23 October 2021                                         L. Chen
+Expires: 3 January 2022                                          L. Chen
                                                     University of Surrey
-                                                           21 April 2021
+                                                             2 July 2021
 
 
    Direct Anonymous Attestation for the Remote Attestation Procedures
@@ -47,7 +47,7 @@ Status of This Memo
    time.  It is inappropriate to use Internet-Drafts as reference
    material or to cite them other than as "work in progress."
 
-   This Internet-Draft will expire on 23 October 2021.
+   This Internet-Draft will expire on 3 January 2022.
 
 Copyright Notice
 
@@ -70,9 +70,12 @@ Table of Contents
    3.  Direct Anonymous Attestation
    4.  DAA changes to the RATS Architecture
    5.  Additions to Remote Attestation principles
-   6.  References
-     6.1.  Normative References
-     6.2.  Informative References
+   6.  Privacy Considerations
+   7.  Security Considerations
+   8.  IANA Considerations
+   9.  References
+     9.1.  Normative References
+     9.2.  Informative References
    Authors' Addresses
 
 1.  Introduction
@@ -271,9 +274,21 @@ Table of Contents
       be distinguishable and the DAA credential which represents the
       Attesting Environment is randomised each time it used.
 
-6.  References
+6.  Privacy Considerations
 
-6.1.  Normative References
+   Privacy Considerations
+
+7.  Security Considerations
+
+   Security Considerations
+
+8.  IANA Considerations
+
+   We don't yet.
+
+9.  References
+
+9.1.  Normative References
 
    [RFC2119]  Bradner, S., "Key words for use in RFCs to Indicate
               Requirement Levels", BCP 14, RFC 2119,
@@ -290,7 +305,7 @@ Table of Contents
               2119 Key Words", BCP 14, RFC 8174, DOI 10.17487/RFC8174,
               May 2017, <https://datatracker.ietf.org/doc/html/rfc8174>.
 
-6.2.  Informative References
+9.2.  Informative References
 
    [DAA]      Brickell, E., Camenisch, J., and L. Chen, "Direct
               Anonymous Attestation", ACM Proceedings of the 11rd ACM
@@ -301,16 +316,16 @@ Table of Contents
               Birkholz, H., Thaler, D., Richardson, M., Smith, N., and
               W. Pan, "Remote Attestation Procedures Architecture", Work
               in Progress, Internet-Draft, draft-ietf-rats-architecture-
-              11, 30 March 2021, <https://datatracker.ietf.org/doc/html/
-              draft-ietf-rats-architecture-11.txt>.
+              12, 23 April 2021, <https://datatracker.ietf.org/doc/html/
+              draft-ietf-rats-architecture-12.txt>.
 
    [I-D.ietf-rats-reference-interaction-models]
-              Birkholz, H., Eckel, M., Newton, C., and L. Chen,
-              "Reference Interaction Models for Remote Attestation
-              Procedures", Work in Progress, Internet-Draft, draft-ietf-
-              rats-reference-interaction-models-01, 23 October 2020,
+              Birkholz, H., Eckel, M., Pan, W., and E. Voit, "Reference
+              Interaction Models for Remote Attestation Procedures",
+              Work in Progress, Internet-Draft, draft-ietf-rats-
+              reference-interaction-models-02, 25 April 2021,
               <https://datatracker.ietf.org/doc/html/draft-ietf-rats-
-              reference-interaction-models-01.txt>.
+              reference-interaction-models-02.txt>.
 
 Authors' Addresses
 
