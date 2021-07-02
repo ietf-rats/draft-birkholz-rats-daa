@@ -183,4 +183,16 @@ Authentication Secret IDs ('authSecID'):
 : In DAA, an Authentication Secret ID does not identify a unique Attesting Environment but is associated with a group of Attesting Environments.
 This is because an Attesting Environment should not be distinguishable and the DAA credential which represents the Attesting Environment is randomised each time it used.
 
+# Privacy Considerations
+
+Privacy Considerations
+
+# Security Considerations
+
+Security Considerations
+
+# IANA Considerations
+
+We don't yet.
+
 --- back
