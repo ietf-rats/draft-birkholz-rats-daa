@@ -185,11 +185,29 @@ This is because an Attesting Environment should not be distinguishable and the D
 
 # Privacy Considerations
 
-Privacy Considerations
+As outlined about for DAA to provide privacy for the Attester the DAA group must be large enough to stop the Verifier identifying the Attester.
+
+Randomization of the DAA credential by the Attester means that collusion between the DAA Issuer and Verifier, will not give them any advantage when trying to identify the Attester.
+
+For DAA, the Attestation Evidence conveyed to the Verifier MUST not uniqely identify the Attester. If the Attestation Evidence is unique to an Attester other cryptographic techniques can be used, for example, property based attestation.
+(Henk -- reference follows)
+
+Chen L., Löhr H., Manulis M., Sadeghi AR. (2008) Property-Based Attestation without a Trusted Third Party. Information Security. ISC 2008. Lecture Notes in Computer Science, vol 5222. Springer. https://doi.org/10.1007/978-3-540-85886-7_3
 
 # Security Considerations
 
-Security Considerations
+The anonymity property of DAA makes revocation difficult. Well know sloutions include:
+1. Rogue attester revocation -- if the an Attester's private key is compromised and known by the Verifier then any DAA signature from that Attester can be revoked.
+2. EPID - Intel's Enhanced Privacy ID -- this requires the Attester to prove (as part of their Attestation) that their credential was not used to generate any signature in a signature revocation list. 
+
+There are no other special security conderations for DAA over and above those specifed in the RATS architecture document.{REF!!}
+
+# Implementation Considerations
+
+The new DAA Issuer role can be implemented in a number of ways, for example:
+1. As a stand-alone service like a Certificate Authority, a Privacy CA.
+2. As a part of the Attester's manufacture. The Endorser and the DAA Issuer could be the same entity and the manufacturer would then provide a certificate for the group public key to the Verifier.
+
 
 # IANA Considerations
 
