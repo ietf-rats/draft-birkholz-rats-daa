@@ -297,8 +297,8 @@ Table of Contents
 
 7.  Security Considerations
 
-   The anonymity property of DAA makes revocation difficult.  Well know
-   sloutions include: 1.  Rogue attester revocation -- if the an
+   The anonymity property of DAA makes revocation difficult.  Well known
+   solutions include: 1.  Rogue attester revocation -- if the an
    Attester's private key is compromised and known by the Verifier then
    any DAA signature from that Attester can be revoked. 2.  EPID -
    Intel's Enhanced Privacy ID -- this requires the Attester to prove
@@ -306,7 +306,8 @@ Table of Contents
    generate any signature in a signature revocation list.
 
    There are no other special security conderations for DAA over and
-   above those specifed in the RATS architecture document.{REF!!}
+   above those specifed in the RATS architecture document
+   [I-D.ietf-rats-architecture].
 
 8.  Implementation Considerations
 
@@ -325,6 +326,11 @@ Table of Contents
 
 10.1.  Normative References
 
+   [DAA]      Brickell, E., Camenisch, J., and L. Chen, "Direct
+              Anonymous Attestation", ACM Proceedings of the 11rd ACM
+              conference on Computer and Communications Security,
+              page 132-145, 2004.
+
    [RFC2119]  Bradner, S., "Key words for use in RFCs to Indicate
               Requirement Levels", BCP 14, RFC 2119,
               DOI 10.17487/RFC2119, March 1997,
@@ -341,11 +347,6 @@ Table of Contents
               May 2017, <https://datatracker.ietf.org/doc/html/rfc8174>.
 
 10.2.  Informative References
-
-   [DAA]      Brickell, E., Camenisch, J., and L. Chen, "Direct
-              Anonymous Attestation", ACM Proceedings of the 11rd ACM
-              conference on Computer and Communications Security,
-              page 132-145, 2004.
 
    [I-D.ietf-rats-architecture]
               Birkholz, H., Thaler, D., Richardson, M., Smith, N., and
