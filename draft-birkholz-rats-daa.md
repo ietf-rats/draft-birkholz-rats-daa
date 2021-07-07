@@ -36,10 +36,6 @@ normative:
   RFC2119:
   RFC5280:
   RFC8174:
-
-informative:
-  I-D.ietf-rats-architecture: RATS
-  I-D.ietf-rats-reference-interaction-models: models
   DAA:
     title: Direct Anonymous Attestation
     author:
@@ -54,6 +50,10 @@ informative:
         Proceedings of the 11rd ACM conference on Computer and Communications Security
       page: 132-145
     date: 2004
+
+informative:
+  I-D.ietf-rats-architecture: RATS
+  I-D.ietf-rats-reference-interaction-models: models
 
 --- abstract
 
@@ -196,11 +196,11 @@ Chen L., Löhr H., Manulis M., Sadeghi AR. (2008) Property-Based Attestation wit
 
 # Security Considerations
 
-The anonymity property of DAA makes revocation difficult. Well know sloutions include:
+The anonymity property of DAA makes revocation difficult. Well known solutions include:
 1. Rogue attester revocation -- if the an Attester's private key is compromised and known by the Verifier then any DAA signature from that Attester can be revoked.
 2. EPID - Intel's Enhanced Privacy ID -- this requires the Attester to prove (as part of their Attestation) that their credential was not used to generate any signature in a signature revocation list. 
 
-There are no other special security conderations for DAA over and above those specifed in the RATS architecture document.{REF!!}
+There are no other special security conderations for DAA over and above those specifed in the RATS architecture document {{-RATS}}.
 
 # Implementation Considerations
 
